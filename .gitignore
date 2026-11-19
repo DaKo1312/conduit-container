@@ -1,0 +1,30 @@
+# Secrets: only the template is tracked
+.env
+!.env.example
+
+# Credentials
+*.pem
+*.key
+id_rsa*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+db.sqlite3
+staticfiles/
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+
+# Exported container logs
+*-logs.txt
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
