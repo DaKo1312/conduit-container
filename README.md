@@ -31,7 +31,7 @@ The frontend is then available at `http://<server-ip>:8282`.
 | `DJANGO_SUPERUSER_PASSWORD` | – | Password of the admin account |
 | `DJANGO_ALLOWED_HOSTS` | `localhost` | Server IP or hostname, comma-separated |
 | `FRONTEND_HOST_PORT` | `8282` | Host port of the frontend |
-| `BACKEND_HOST_PORT` | `8000` | Host port of the backend |
+| `BACKEND_HOST_PORT` | `8000` | Host port of the backend, bound to localhost only |
 
 Non-critical settings such as database name, user and internal ports are set in `docker-compose.yaml` under `environment`. After a change, apply it with `docker compose up -d`; changes to the Dockerfiles need `docker compose up -d --build`.
 
