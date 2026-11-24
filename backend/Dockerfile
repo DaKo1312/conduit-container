@@ -21,7 +21,10 @@ COPY . .
 
 # The key is only needed to load the settings; the real one comes from .env.
 RUN DJANGO_SECRET_KEY=build-only python manage.py collectstatic --noinput \
-    && chmod +x entrypoint.sh
+    && chmod +x entrypoint.sh \
+    && useradd --create-home conduit
+
+USER conduit
 
 EXPOSE ${BACKEND_PORT}
 
