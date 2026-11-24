@@ -33,7 +33,15 @@ The frontend is then available at `http://<server-ip>:8282`.
 | `FRONTEND_HOST_PORT` | `8282` | Host port of the frontend |
 | `BACKEND_HOST_PORT` | `8000` | Host port of the backend, bound to localhost only |
 
-Non-critical settings such as database name, user and internal ports are set in `docker-compose.yaml` under `environment`. After a change, apply it with `docker compose up -d`; changes to the Dockerfiles need `docker compose up -d --build`.
+Non-critical settings such as database name, user and internal ports are set in `docker-compose.yaml` under `environment`. After a change, apply it with `docker compose up -d`; changes to the Dockerfiles need `docker compose up -d --build`. For example, set `FRONTEND_HOST_PORT=9090` in `.env` and run `docker compose up -d` to serve the frontend on port 9090.
+
+**Start and stop** — manage the running stack:
+
+```bash
+docker compose stop       # stop the containers
+docker compose restart    # restart the containers
+docker compose down       # remove the containers, the data is kept
+```
 
 **Admin panel** — create the admin account once and log in at `http://<server-ip>:8282/admin/` with the email and `DJANGO_SUPERUSER_PASSWORD`:
 
