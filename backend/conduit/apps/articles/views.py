@@ -1,5 +1,5 @@
 from rest_framework import generics, mixins, status, viewsets
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, PermissionDenied
 from rest_framework.permissions import (
     AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
 )
@@ -11,7 +11,8 @@ from .renderers import ArticleJSONRenderer, CommentJSONRenderer
 from .serializers import ArticleSerializer, CommentSerializer, TagSerializer
 
 
-class ArticleViewSet(mixins.CreateModelMixin, 
+class ArticleViewSet(mixins.CreateModelMixin,
+                     mixins.DestroyModelMixin,
                      mixins.ListModelMixin,
                      mixins.RetrieveModelMixin,
                      viewsets.GenericViewSet):
@@ -104,6 +105,20 @@ class ArticleViewSet(mixins.CreateModelMixin,
         serializer.save()
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def destroy(self, request, slug):
+        try:
+            article = self.queryset.get(slug=slug)
+        except Article.DoesNotExist:
+            raise NotFound('An article with this slug does not exist.')
+
+        # Only the author may delete an article.
+        if article.author != request.user.profile:
+            raise PermissionDenied('You can only delete your own articles.')
+
+        article.delete()
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
 
 
 class CommentsListCreateAPIView(generics.ListCreateAPIView):
