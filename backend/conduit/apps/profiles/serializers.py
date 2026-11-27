@@ -18,7 +18,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         if obj.image:
             return obj.image
 
-        return 'https://static.productionready.io/images/smiley-cyrus.jpg'
+        return '/assets/smiley-cyrus.jpg'
 
     def get_following(self, instance):
         request = self.context.get('request', None)

@@ -10,6 +10,10 @@ class ConduitJSONRenderer(JSONRenderer):
     pagination_object_count = 'count'
 
     def render(self, data, media_type=None, renderer_context=None):
+        # Responses without content, such as 204 after a delete.
+        if data is None:
+            return b''
+
         if data.get('results', None) is not None:
             return json.dumps({
                 self.pagination_object_label: data['results'],
